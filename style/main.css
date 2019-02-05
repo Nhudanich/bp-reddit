@@ -1,0 +1,229 @@
+/* general */
+
+:root {
+    --color-red: #ec5760;
+    --color-red-050: rgba(236, 87, 96, 0.5);
+    --color-red-030: rgba(236, 87, 96, 0.3);
+    --color-yellow: #f6c55e;
+    --color-blue: #34bac8;
+    --color-light-blue: #acdade;
+    --color-light-blue-050: rgba(172, 218, 222, 0.5);
+    --color-light-blue-030: rgba(172, 218, 222, 0.3);
+    --color-dark-blue: #0c416c;
+    --color-white: #fff;
+    --color-black: #111;
+    --color-black-050: rgba(0, 0, 0, 0.5);
+    --color-black-030: rgba(0, 0, 0, 0.3);
+    --color-black-020: rgba(0, 0, 0, 0.2);
+    --color-black-010: rgba(0, 0, 0, 0.1);
+    --color-light-grey: #bcbcbc;
+    --color-light-grey-035: rgba(230, 230, 230, 0.35);
+    --transparent: rgba(0,0,0,0);
+}
+
+* {
+    font-family: 'Rubik', sans-serif;
+    transition: all 100ms;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background: repeating-linear-gradient(
+            45deg,
+            var(--color-white),
+            var(--color-light-grey-035) 8px,
+            var(--color-white) 2px
+    );
+}
+
+/* navigation bar */
+
+#navbar {
+    z-index: 10;
+    display: block;
+    padding: 1rem;
+    background-color: var(--color-white);
+    color: var(--color-dark-blue);
+}
+
+#navbar .navbar-item {
+    display: inline-block;
+    padding: 0.25rem 0.35rem;
+    margin-right: 0.25rem;
+}
+
+#navbar #navbar-brand {
+    font-weight: 700;
+}
+
+#navbar #navbar-username #navbar-username-input {
+    border: none;
+    background-color: var(--transparent);
+    padding: 0;
+    font-size: 1rem;
+    color: var(--color-dark-blue);
+}
+
+#navbar #navbar-username:hover {
+    background-color: var(--color-light-blue);
+}
+
+/* body */
+
+#feed {
+    z-index: 10;
+    display: block;
+    padding: 1rem;
+}
+
+#feed #feed-new-post {
+    display: block;
+    padding: 0.5rem;
+}
+
+#feed #feed-new-post #feed-new-post-input {
+    width: 50%;
+    display: block;
+    resize: vertical;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid var(--color-black-010);
+}
+
+#feed #feed-new-post #feed-new-post-submit {
+    margin-top: 0.25rem;
+    font-size: 1rem;
+}
+
+#feed #feed-style {
+    display: block;
+    padding: 0.25rem;
+}
+
+#feed #feed-style .feed-style-option {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 100rem;
+    color: var(--color-dark-blue);
+}
+
+#feed #feed-style .feed-style-option:hover {
+    color: var(--color-blue);
+}
+
+#feed #feed-style .feed-style-option-active {
+    background-color: var(--color-yellow);
+}
+
+#feed #feed-posts {
+    display: block;
+}
+
+#feed #feed-posts .feed-posts-post-card {
+    display: block;
+    margin: 0.5rem;
+    max-width: 70%;
+}
+
+#feed #feed-posts .feed-posts-post-card .feed-posts-post-init {
+    display: inline-block;
+    padding: 0.5rem;
+    border-radius: 5px;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-black-010);
+}
+
+#feed #feed-posts .feed-posts-post-card .feed-posts-post-init .feed-posts-post-information {
+    display: block;
+    font-size: 0.8rem;
+    border-bottom: 1px solid var(--color-black-010);
+    padding-bottom: 0.15rem;
+}
+#feed #feed-posts .feed-posts-post-card .feed-posts-post-init .feed-posts-post-information .feed-posts-post-username {
+    color: var(--color-dark-blue);
+}
+#feed #feed-posts .feed-posts-post-card .feed-posts-post-init .feed-posts-post-information .feed-posts-post-username:hover {
+    text-decoration: underline;
+}
+#feed #feed-posts .feed-posts-post-card .feed-posts-post-init .feed-posts-post-information .feed-posts-post-date {
+    color: var(--color-dark-blue);
+}
+#feed #feed-posts .feed-posts-post-card .feed-posts-post-init .feed-posts-post-information .feed-posts-post-date:hover {
+    text-decoration: underline;
+}
+
+#feed #feed-posts .feed-posts-post-card .feed-posts-post-init .feed-posts-post-text {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    display: block;
+}
+
+#feed #feed-posts .feed-posts-post-card .feed-posts-post-init .feed-posts-post-text-big-font {
+    font-size: 1.4rem;
+}
+
+#feed #feed-posts .feed-posts-post-card .feed-posts-post-init .feed-posts-post-up-down-wrapper {
+    border-top: 1px solid var(--color-black-010);
+    padding-top: 0.15rem;
+    display: block;
+    font-size: 0.8rem;
+}
+.feed-posts-post-upvote:hover, .feed-posts-post-downvote:hover {
+    color: var(--color-light-blue);
+    cursor: pointer;
+}
+.feed-posts-post-upvote:focus, .feed-posts-post-downvote:focus, .feed-posts-post-upvote:active, .feed-posts-post-downvote:active {
+    color: var(--color-blue);
+    cursor: pointer;
+}
+.feed-posts-post-voted {
+    font-weight: 700;
+    color: var(--color-blue);
+}
+.feed-posts-post-ups, .feed-posts-post-downs {
+    display: inline-block;
+    margin: 0 0.5rem;
+    padding: 0 0.275rem;
+    border-radius: 3px;
+    border: 1px solid var(--color-black-020);
+
+}
+.feed-posts-post-ups {
+    background-color: var(--color-light-blue-050);
+}
+.feed-posts-post-downs {
+    background-color: var(--color-red-030);
+}
+
+/* footer */
+
+#footer {
+    z-index: 10;
+    display: block;
+    padding: 1rem;
+    font-weight: 700;
+    color: var(--color-dark-blue);
+    background-color: white;
+}
+
+/* modal */
+
+#modal {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-black-050);
+    padding: 1rem;
+    display: none;
+}
+
+#modal-init {
+    z-index: 110;
+    display: block;
+    padding: 5rem 10rem;
+    background-color: var(--color-light-blue);
+}

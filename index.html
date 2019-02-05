@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BP - Mini Reddit</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style/main.css">
+    <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+    <script src="src/firebase-init.js"></script>
+    <script src="src/main.js"></script>
+</head>
+<body>
+<!-- navigation bar -->
+<span id="navbar">
+    <span id="navbar-brand" class="navbar-item">Blueprint Mini Reddit</span>
+    <span class="navbar-item navbar-separator">|</span>
+    <span id="navbar-username" class="navbar-item">
+        <input id="navbar-username-input" type="button" value="Pick a username!" onclick="App.promptUsernameInput()">
+    </span>
+</span>
+
+<!-- feed of posts -->
+<span id="feed">
+    <span id="feed-style">
+        <span class="feed-style-option">Random</span>
+        <span class="feed-style-option">Ranked</span>
+        <span class="feed-style-option feed-style-option-active">Chronological</span>
+    </span>
+    <span id="feed-new-post"></span>
+    <span id="feed-posts"></span>
+</span>
+
+<!-- footer -->
+<span id="footer">Mini-Reddit Inc.</span>
+
+<!-- modal: appears and disappears as needed -->
+<span id="modal">
+    <span id="modal-init"></span>
+</span>
+</body>
+</html>
