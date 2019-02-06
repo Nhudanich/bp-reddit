@@ -325,7 +325,7 @@ App.createNewPostElement = function createNewPostElement() {
 };
 
 App.addNewPost = function addNewPost(text) {
-  const post_obj = { text, ups: 0, downs: 0, posted_on: Date.now(), username: App.Vars.username };
+  const post_obj = { text, posted_on: Date.now(), username: App.Vars.username };
   // App.Vars.posts.push(post_obj);
   // App.loadFeed();
   Firebase
