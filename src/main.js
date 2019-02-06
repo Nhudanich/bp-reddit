@@ -152,7 +152,7 @@ App.getSortedPosts = function getSortedPosts() {
   const sorting_method = App.getSortingMethod();
   switch (sorting_method) {
     case App.Constants.SortingMethod.random:
-      return Utils.getShuffledArray(App.Vars.posts);
+      return Utils.getRandomArray(App.Vars.posts);
     case App.Constants.SortingMethod.ranked:
       return Utils.getRankedPosts(App.Vars.posts);
     case App.Constants.SortingMethod.chronological:
@@ -234,7 +234,7 @@ App.createPostHTMLElement = function createPostObject(post) {
   post_user_indicator.appendChild(post_username);
   post_user_indicator.appendChild(document.createTextNode(" on "));
   post_user_indicator.appendChild(post_date);
-  const [post_up_count, post_down_count] = App.computeVoteCounts(post);
+  const [post_up_count, post_down_count] = Utils.computeVoteCounts(post);
   const post_ups = Builder.elementWithClass("feed-posts-post-ups", post_up_count + "");
   const post_up_button = Builder.elementWithClass("feed-posts-post-upvote", "upvote");
   post_up_button.onclick = function () {
@@ -387,7 +387,7 @@ App.updatePostOnView = function updatePostOnView(post) {
   const upvote_count = post_up_down_wrapper.children[1];
   const downvote_button = post_up_down_wrapper.children[2];
   const downvote_count = post_up_down_wrapper.children[3];
-  const [ups, downs] = App.computeVoteCounts(post);
+  const [ups, downs] = Utils.computeVoteCounts(post);
   if (!App.Vars.votes[post.id]) {
     return;
   }
@@ -407,20 +407,6 @@ App.updatePostOnView = function updatePostOnView(post) {
     downvote_button.className = "feed-posts-post-downvote";
     downvote_count.innerHTML = `${downs}`;
   }
-};
-
-App.computeVoteCounts = function computeVoteCounts(post, remove_app_vote=true) {
-  let ups = 0;
-  let downs = 0;
-  Object.keys(post.votes || {}).forEach(key => {
-    if (key === App.Vars.username && remove_app_vote) {
-      return;
-    }
-    const v = post.votes[key];
-    ups += v === App.Constants.Votes.up ? 1 : 0;
-    downs += v === App.Constants.Votes.down ? 1 : 0;
-  });
-  return [ups, downs];
 };
 
 /**
@@ -618,11 +604,24 @@ const Utils = {
       return post;
     });
   },
+  computeVoteCounts (post, remove_app_vote=true) {
+    let ups = 0;
+    let downs = 0;
+    Object.keys(post.votes || {}).forEach(key => {
+      if (key === App.Vars.username && remove_app_vote) {
+        return;
+      }
+      const v = post.votes[key];
+      ups += v === App.Constants.Votes.up ? 1 : 0;
+      downs += v === App.Constants.Votes.down ? 1 : 0;
+    });
+    return [ups, downs];
+  },
   /*
    * algorithm found on Stack Overflow, modified variable names:
    * https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array
    * */
-  getShuffledArray(array) {
+  getRandomArray(array) {
     for (let i = array.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
@@ -632,8 +631,8 @@ const Utils = {
   getRankedPosts(posts) {
     const posts_to_sort = posts.map(p => p);
     posts_to_sort.sort((a, b) => {
-      const [a_ups, a_downs] = App.computeVoteCounts(a, false);
-      const [b_ups, b_downs] = App.computeVoteCounts(b, false);
+      const [a_ups, a_downs] = Utils.computeVoteCounts(a, false);
+      const [b_ups, b_downs] = Utils.computeVoteCounts(b, false);
       return (b_ups - b_downs) - (a_ups - a_downs);
     });
     return posts_to_sort;
@@ -648,6 +647,10 @@ const Utils = {
 /**
  * potential additions:
  * - add a logout button
- * - inverse sorting, how can you do this?
- * - can you think of another type of sorting
+ * - make it more mobile friendly
+ * - inverse sorting (on each sorting method), how can you do this?
+ * - make the footer a sticky footer (see resources)
+ * - add comments
+ * - display the number of active users
+ * - show who upvoted and downvoted
  * */
