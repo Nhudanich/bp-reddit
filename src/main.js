@@ -1,7 +1,7 @@
-/**
+/**************************************************************
  * everything in this application happens within this function
  * and uses some other functions defined in firebase-init.js.
- * */
+ **************************************************************/
 
 /**
  * App contains multiple things related to this web application
@@ -91,6 +91,9 @@ App.main = function main() {
   Firebase.activateListeningToPosts();
 };
 
+// when the window loads, run APP.main
+window.addEventListener("load", App.main);
+
 /**
  * The Builder object will have methods related to creating
  * various HTML elements. these methods are defined at the
@@ -98,9 +101,6 @@ App.main = function main() {
  * Builder object because some of the methods use it.
  */
 const Builder = {};
-
-// when the window loads, run APP.main
-window.addEventListener("load", App.main);
 
 /******************************
  * stuffs related to the feed *
