@@ -1,110 +1,101 @@
 /**
+ * everything in this application happens within this function
+ * and uses some other functions defined in firebase-init.js.
+ * */
+
+/**
  * App contains multiple things related to this web application
  * it's often good practice to wrap all declared variables within
  * an object in order to avoid variable conflicts.
- *
- * everything in this application happens within this function
- * and uses some other functions defined in firebase-init.js.
- *
- * this application does something else that is interesting and
- * recommended. it's called Model-View-Controller (MVC). The MVC
- * concept relies on having 3 components:
- * - a model which represents the state of our data. this model
- *   may change through the controller.
- * - a controller which allows us to modify the model by
- *   interacting with it. the controller internally modifies the
- *   model, which in turns triggers a change in the view.
- * - the view is a visual representation of the model. it always
- *   reflects the model. the view has no knowledge of the
- *   controller.
- *
- * this application uses the MVC concept minimally by displaying
- * the web app based on the content of App.Vars (our model in our
- * case). When interacting with the model, something changes in
- * the model, and then we call one of the methods:
- * - App.updatePostOnView
- * - App.updateView
- * See those two methods for more details.
- */
-const App = {
-  // variables may change throughout the application
-  Vars: {
-    username: null,
-    posts: [],
-    votes: {},
-    active_feed_style: "chronological",
+ * */
+const App = {};
+/* variables may change throughout the application. we use these
+ * variables to display the HTML. */
+App.Vars = {
+  username: null,
+  posts: [],
+  votes: {},
+  active_feed_style: "chronological",
+};
+/* constants never change throughout the application */
+App.Constants = {
+  // how long it takes an animation in the HTML to change
+  animation_transition_time: 100,
+  // we use these integers as global constant variables to identify
+  // votes values
+  Votes: {
+    up: 1,
+    neutral: 0,
+    down: -1,
   },
-  // constants never change throughout the application
-  Constants: {
-    animation_transition_time: 200,
-    Votes: {
-      up: 1,
-      neutral: 0,
-      down: -1,
+  // some sample posts to see what the post object looks like
+  sample_posts: [
+    {
+      text: "I love this mini-reddit app",
+      ups: 10,
+      downs: 5,
+      votes: {a: 1, b: 1, c: 1, d: 1, e: 1, f: -1, g: -1, h: -1, i: -1},
+      posted_on: 1549531526751,
+      username: "YourAverageCoder",
+      id: "SAMPLE_ID_1",
     },
-    sample_posts: [
-      {
-        text: "I love this mini-reddit app",
-        ups: 10,
-        downs: 5,
-        votes: {a: 1, b: 1, c: 1, d: 1, e: 1, f: -1, g: -1, h: -1, i: -1},
-        posted_on: 1549531526751,
-        username: "YourAverageCoder",
-        id: "SAMPLE_ID_1",
-      },
-      {
-        text: "Eww Harvard",
-        ups: 999,
-        downs: 3,
-        votes: {a: 1, b: 1, c: 1, d: 1, e: 1, f: 1, g: 1, h: 1, i: 1, j: 1, k: -1},
-        posted_on: 1548521537614,
-        username: "MIT_Student23",
-        id: "SAMPLE_ID_2",
-      },
-      {
-        text: "Eww Harvard really sucks!",
-        ups: 109,
-        downs: 7,
-        votes: {a: 1, b: 1, c: 1, d: 1, e: 1, f: 1, g: 1, h: 1, i: 1, j: 1, k: -1, l: 1},
-        posted_on: 1548621537614,
-        username: "MIT_Student23",
-        id: "SAMPLE_ID_3",
-      },
-      {
-        text: "I really wish I went to MIT! It's so much better there!",
-        ups: 43,
-        downs: 0,
-        votes: {a: 1, b: 1, c: 1, i: -1},
-        posted_on: 1548921537614,
-        username: "AverageHarvardStudent42",
-        id: "SAMPLE_ID_4",
-      },
-    ],
-    SortingMethod: {
-      // sort posts by when it was posted, we have this by default
-      chronological: "chronological",
-      // sort posts randomly
-      random: "random",
-      // best up-voted - down-voted ranked
-      ranked: "ranked",
+    {
+      text: "Eww Harvard",
+      ups: 999,
+      downs: 3,
+      votes: {a: 1, b: 1, c: 1, d: 1, e: 1, f: 1, g: 1, h: 1, i: 1, j: 1, k: -1},
+      posted_on: 1548521537614,
+      username: "MIT_Student23",
+      id: "SAMPLE_ID_2",
     },
-    // when the length of a post has less than this number of character
-    // we write the post in a bigger font
-    big_font_character_limit: 85,
+    {
+      text: "Eww Harvard really sucks!",
+      ups: 109,
+      downs: 7,
+      votes: {a: 1, b: 1, c: 1, d: 1, e: 1, f: 1, g: 1, h: 1, i: 1, j: 1, k: -1, l: 1},
+      posted_on: 1548621537614,
+      username: "MIT_Student23",
+      id: "SAMPLE_ID_3",
+    },
+    {
+      text: "I really wish I went to MIT! It's so much better there!",
+      ups: 43,
+      downs: 0,
+      votes: {a: 1, b: 1, c: 1, i: -1},
+      posted_on: 1548921537614,
+      username: "AverageHarvardStudent42",
+      id: "SAMPLE_ID_4",
+    },
+  ],
+  // sorting methods for how we sort the posts in the HTML
+  SortingMethod: {
+    // sort posts by when it was posted, we have this by default
+    chronological: "chronological",
+    // sort posts randomly
+    random: "random",
+    // best up-voted - down-voted ranked
+    ranked: "ranked",
   },
-  // main function to run when the window loads
-  main() {
-    App.Constants.sample_posts.forEach((post) => App.Vars.posts.push(post));
-    App.loadFeed();
-    App.activateSortingSelection();
-    App.activateModalFunctions();
-    Firebase.activateListeningToPosts();
-  },
+  // when the length of a post has less than this number of character
+  // we write the post in a bigger font
+  big_font_character_limit: 85,
+};
+
+/* main function to run when the window loads */
+App.main = function main() {
+  // todo - remove this when Firebase is implemented
+  // App.Constants.sample_posts.forEach((post) => App.Vars.posts.push(post));
+  App.loadFeed();
+  App.activateSortingSelection();
+  App.activateModalFunctions();
+  Firebase.activateListeningToPosts();
 };
 
 /**
  * The Builder object will have methods related to creating
- * various HTML elements.
+ * various HTML elements. these methods are defined at the
+ * below after all App methods, but we must initialize the
+ * Builder object because some of the methods use it.
  */
 const Builder = {};
 
@@ -121,24 +112,32 @@ App.loadFeed = function loadFeed() {
   App.Vars.votes = {};
   // get the sorted posts based on the sorting method
   /*
-  App.getSortedPosts().forEach((post) => {
+  // not using Firebase
+  const feed_posts = document.querySelector("#feed-posts");
+  Utils.removeAllChildren(feed_posts);
+  App.getSortedPosts(App.Vars.posts).forEach((post) => {
     // make sure that if we pick a username that has
     // voted, we're able to take that username's vote
     App.copyOverAppUsernameVotes(post);
-    App.addPost(post);
+    App.addPostToHTML(post);
     App.updatePostOnView(post);
   }); */
+
   // using Firebase
   Firebase.loadPosts()
     .then(function onFulfilled(posts) {
+      // first, remove all posts from the feed so that we have no duplicates
       const feed_posts = document.querySelector("#feed-posts");
       Utils.removeAllChildren(feed_posts);
+      // add all posts as a list instead of an object
       App.Vars.posts = Utils.getPostListFromPostObject(posts);
-      App.getSortedPosts().forEach((post) => {
+      // get the sorted posts based on the sorting method, and
+      // add each post to the HTML
+      App.getSortedPosts(App.Vars.posts).forEach((post) => {
         // make sure that if we pick a username that has
         // voted, we're able to take that username's vote
         App.copyOverAppUsernameVotes(post);
-        App.addPost(post);
+        App.addPostToHTML(post);
         App.updatePostOnView(post);
       });
     })
@@ -148,19 +147,19 @@ App.loadFeed = function loadFeed() {
     });
 };
 
-App.getSortedPosts = function getSortedPosts() {
+App.getSortedPosts = function getSortedPosts(posts) {
   const sorting_method = App.getSortingMethod();
   switch (sorting_method) {
     case App.Constants.SortingMethod.random:
-      return Utils.getRandomArray(App.Vars.posts);
+      return Utils.getRandomArray(posts);
     case App.Constants.SortingMethod.ranked:
-      return Utils.getRankedPosts(App.Vars.posts);
+      return Utils.getRankedPosts(posts);
     case App.Constants.SortingMethod.chronological:
-      return Utils.getChronologicalPosts(App.Vars.posts);
+      return Utils.getChronologicalPosts(posts);
     default:
       console.warn("sorting method has been altered. defaulting to chronological.");
       App.Vars.active_feed_style = App.Constants.SortingMethod.chronological;
-      return Utils.getChronologicalPosts(App.Vars.posts);
+      return Utils.getChronologicalPosts(posts);
   }
 };
 
@@ -179,6 +178,14 @@ App.getSortingMethod = function getSortingMethod() {
   }
 };
 
+/**
+ * when we first get posts from Firebase or even from the
+ * sample posts, the current username could be the one that
+ * has upvoted (or downvoted) one of those posts. we want
+ * to make sure that that post is highlighted as "upvote"
+ * or "downvote" by copying over the voting into the
+ * App.Vars.votes variable so that they can be rendered
+ * properly. */
 App.copyOverAppUsernameVotes = function copyOverAppUsernameVotes(post) {
   Object.keys(post.votes || {}).forEach(key => {
     if (key === App.Vars.username) {
@@ -187,38 +194,19 @@ App.copyOverAppUsernameVotes = function copyOverAppUsernameVotes(post) {
   });
 };
 
-App.activateSortingSelection = function activateSortingSelection() {
-  const feed_style_options = document.querySelectorAll(".feed-style-option");
-  feed_style_options.forEach((feed_style_option_elm) => {
-    feed_style_option_elm.onclick = function onFeedStyleClick(e) {
-      const selected_feed_style = e.target.innerHTML.toLowerCase();
-      App.setSortingMethod(selected_feed_style);
-    }
-  });
-};
-
-App.setSortingMethod = function setSortingMethod(sorting_method) {
-  switch (App.Vars.active_feed_style) {
-    // multiple cases without breaks will fall back to the
-    // last one with a break or a return statement
-    case App.Constants.SortingMethod.random:
-    case App.Constants.SortingMethod.ranked:
-    case App.Constants.SortingMethod.chronological:
-      App.Vars.active_feed_style = sorting_method;
-      break;
-    // if we it's not any of the above, don't change anything
-    default:
-      break;
-  }
-  App.updateView();
-};
-
-App.addPost = function addPost(post) {
+App.addPostToHTML = function addPost(post) {
   const post_elm = App.createPostHTMLElement(post);
   const feed_posts = document.querySelector("#feed-posts");
   feed_posts.appendChild(post_elm);
 };
 
+/**
+ * the following methods is really long. what you need to keep
+ * in mind is that it's creating an HTML object with multiple
+ * classes and ids, and that's why it's so long because it's
+ * creating each of those elements manually and doing various
+ * checks and initializing various functions.
+ * */
 App.createPostHTMLElement = function createPostObject(post) {
   const post_text = Builder.elementWithClass("feed-posts-post-text", post.text);
   if (post.text.length <= App.Constants.big_font_character_limit) {
@@ -305,6 +293,36 @@ App.downvotePostToggleWithId = function downvotePostToggleWithId(post) {
 };
 
 
+/**
+ * if someone clicks on a new sorting method, we want to
+ * redisplay the posts sorted the way the user just chose. */
+App.activateSortingSelection = function activateSortingSelection() {
+  const feed_style_options = document.querySelectorAll(".feed-style-option");
+  feed_style_options.forEach((feed_style_option_elm) => {
+    feed_style_option_elm.onclick = function onFeedStyleClick(e) {
+      const selected_feed_style = e.target.innerHTML.toLowerCase();
+      App.setSortingMethod(selected_feed_style);
+    }
+  });
+};
+
+App.setSortingMethod = function setSortingMethod(sorting_method) {
+  switch (App.Vars.active_feed_style) {
+    // multiple cases without breaks will fall back to the
+    // last one with a break or a return statement
+    case App.Constants.SortingMethod.random:
+    case App.Constants.SortingMethod.ranked:
+    case App.Constants.SortingMethod.chronological:
+      App.Vars.active_feed_style = sorting_method;
+      break;
+    // if we it's not any of the above, don't change anything
+    default:
+      break;
+  }
+  App.updateView();
+};
+
+
 /****************************************
  * textarea stuffs for making new posts *
  ****************************************/
@@ -328,14 +346,9 @@ App.addNewPost = function addNewPost(text) {
   const post_obj = { text, posted_on: Date.now(), username: App.Vars.username };
   // App.Vars.posts.push(post_obj);
   // App.loadFeed();
-  Firebase
-    .storePost(post_obj)
-    .then(App.loadFeed)
-    .catch((error) => {
-      // todo - let the user know or something
-      console.error(error);
-    });
-  ;
+  // using Firebase: since we're listening to changes, there's
+  // no need to reload posts after storing this post.
+  Firebase.storePost(post_obj).then();
 };
 
 /*******************
@@ -644,8 +657,34 @@ const Utils = {
   },
 };
 
+
 /**
- * potential additions:
+ * Some fruits for thoughts:
+ * -------------------------
+ * this application does something else that is interesting and
+ * recommended. it's called Model-View-Controller (MVC). The MVC
+ * concept relies on having 3 components:
+ * - a model which represents the state of our data. this model
+ *   may change through the controller.
+ * - a controller which allows us to modify the model by
+ *   interacting with it. the controller internally modifies the
+ *   model, which in turns triggers a change in the view.
+ * - the view is a visual representation of the model. it always
+ *   reflects the model. the view has no knowledge of the
+ *   controller.
+ *
+ * this application uses the MVC concept minimally by displaying
+ * the web app based on the content of App.Vars (our model in our
+ * case). When interacting with the model, something changes in
+ * the model, and then we call one of the methods:
+ * - App.updatePostOnView
+ * - App.updateView
+ * See those two methods for more details.
+ *
+ * =============================================================================
+ *
+ * potential additions to this application:
+ * ----------------------------------------
  * - add a logout button
  * - make it more mobile friendly
  * - inverse sorting (on each sorting method), how can you do this?
