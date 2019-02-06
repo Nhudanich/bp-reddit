@@ -657,7 +657,6 @@ const Utils = {
   },
 };
 
-
 /**
  * Some fruits for thoughts:
  * -------------------------
