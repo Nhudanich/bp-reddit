@@ -205,8 +205,7 @@ App.addPostToHTML = function addPost(post) {
  * in mind is that it's creating an HTML object with multiple
  * classes and ids, and that's why it's so long because it's
  * creating each of those elements manually and doing various
- * checks and initializing various functions.
- * */
+ * checks and initializing various functions. */
 App.createPostHTMLElement = function createPostObject(post) {
   const post_text = Builder.elementWithClass("feed-posts-post-text", post.text);
   if (post.text.length <= App.Constants.big_font_character_limit) {
@@ -255,8 +254,7 @@ App.createPostHTMLElement = function createPostObject(post) {
  * the first condition will pass only if the vote is
  * not neutral. Then, if the vote is up, then we want to
  * toggle it off to neutral. Otherwise, if it's a downvote,
- * we change it to an upvote. downvoting works similarly.
- * */
+ * we change it to an upvote. downvoting works similarly. */
 App.upvotePostToggleWithId = function upvotePostToggleWithId(post) {
   if (!App.Vars.username) {
     const elm = Builder.elementWithId("modal-must-sign-in", "You must put a username to upvote");
@@ -392,8 +390,7 @@ App.createUsernameInputBox = function createUsernameInputBox() {
 
 /**
  * based on whether the post has been upvoted or downvoted,
- * we update the html to reflect that.
- * */
+ * we update the html to reflect that. */
 App.updatePostOnView = function updatePostOnView(post) {
   const post_up_down_wrapper = document.querySelector(`#${post.id}`).children[0].children[2];
   const upvote_button = post_up_down_wrapper.children[0];
@@ -424,8 +421,7 @@ App.updatePostOnView = function updatePostOnView(post) {
 
 /**
  * based on whether the user has changed, we update
- * the app.
- * */
+ * the app. */
 App.updateView = function updateView() {
   const navbar_username_elm = document.querySelector("#navbar-username");
   const feed_new_post_elm = document.querySelector("#feed-new-post");
@@ -466,9 +462,7 @@ App.updateView = function updateView() {
   App.loadFeed();
 };
 
-/**
- * send the current vote that we have to firebase
- * */
+/** send the current vote that we have to firebase */
 App.sendAppVotesToFirebase = function sendAppVotesToFirebase() {
   // todo - to be completed later
   Object.keys(App.Vars.votes).forEach((post_id) => {
@@ -526,9 +520,7 @@ App.hideModal = function displayModal() {
  * Builder methods *
  *******************/
 
-/*
- * builds a span object with an optional text inside it
- */
+/** builds a span object with an optional text inside it */
 Builder.span = function (optionalInnerText) {
   if (!optionalInnerText) {
     return document.createElement("span");
@@ -538,30 +530,27 @@ Builder.span = function (optionalInnerText) {
   return span;
 };
 
-/*
+/**
  * builds a span object with the given className and an
- * optional text inside it
- */
+ * optional text inside it */
 Builder.elementWithClass = function (className, optionalInnerText) {
   const span = Builder.span(optionalInnerText);
   span.className = className;
   return span;
 };
 
-/*
+/**
  * builds a span object with the given idName and an
- * optional text inside it
- */
+ * optional text inside it */
 Builder.elementWithId = function (idName, optionalInnerText) {
   const span = Builder.span(optionalInnerText);
   span.id = idName;
   return span;
 };
 
-/*
+/**
  * builds a span object with the given idName and the
- * given className and an optional text inside it
- */
+ * given className and an optional text inside it */
 Builder.elementWithIdAndClass = function (idName, className, optionalInnerText) {
   const span = Builder.span(optionalInnerText);
   span.id = idName;
@@ -569,10 +558,9 @@ Builder.elementWithIdAndClass = function (idName, className, optionalInnerText) 
   return span;
 };
 
-/*
+/**
  * builds an input object with the given type, id, and
- * onclick function
- * */
+ * onclick function */
 Builder.input = function (type, idName, onClickFunc) {
   const input = document.createElement("input");
   input.type = type;
@@ -630,7 +618,7 @@ const Utils = {
     });
     return [ups, downs];
   },
-  /*
+  /**
    * algorithm found on Stack Overflow, modified variable names:
    * https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array
    * */
