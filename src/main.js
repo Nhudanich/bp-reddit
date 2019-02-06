@@ -2,6 +2,29 @@
  * App contains multiple things related to this web application
  * it's often good practice to wrap all declared variables within
  * an object in order to avoid variable conflicts.
+ *
+ * everything in this application happens within this function
+ * and uses some other functions defined in firebase-init.js.
+ *
+ * this application does something else that is interesting and
+ * recommended. it's called Model-View-Controller (MVC). The MVC
+ * concept relies on having 3 components:
+ * - a model which represents the state of our data. this model
+ *   may change through the controller.
+ * - a controller which allows us to modify the model by
+ *   interacting with it. the controller internally modifies the
+ *   model, which in turns triggers a change in the view.
+ * - the view is a visual representation of the model. it always
+ *   reflects the model. the view has no knowledge of the
+ *   controller.
+ *
+ * this application uses the MVC concept minimally by displaying
+ * the web app based on the content of App.Vars (our model in our
+ * case). When interacting with the model, something changes in
+ * the model, and then we call one of the methods:
+ * - App.updatePostOnView
+ * - App.updateView
+ * See those two methods for more details.
  */
 const App = {
   // variables may change throughout the application
@@ -404,7 +427,7 @@ App.computeVoteCounts = function computeVoteCounts(post, remove_app_vote=true) {
  * based on whether the user has changed, we update
  * the app.
  * */
-App.updateView = function updateUsername() {
+App.updateView = function updateView() {
   const navbar_username_elm = document.querySelector("#navbar-username");
   const feed_new_post_elm = document.querySelector("#feed-new-post");
   Utils.removeAllChildren(navbar_username_elm);
