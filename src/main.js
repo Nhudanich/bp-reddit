@@ -170,9 +170,7 @@ App.copyOverAppUsernameVotes = function copyOverAppUsernameVotes(post) {
 };
 
 App.addPostToHTML = function addPost(post) {
-  const post_elm = App.createPostHTMLElement(post);
-  const feed_posts = document.querySelector("#feed-posts");
-  feed_posts.appendChild(post_elm);
+  // TODO-JS - implement this method by creating a new post element and appending it to #feed-posts
 };
 
 /**
@@ -468,15 +466,15 @@ App.displayModal = function displayModal(html_element) {
   const modal_init = document.querySelector("#modal-init");
   Utils.removeAllChildren(modal_init);
   modal_init.appendChild(html_element);
-  const modal = document.querySelector("#modal");
-  modal.style.display = "block";
-  modal.style.opacity = "1";
+  // TODO-JS - display the modal object by setting its display to "block" and opacity to "1"
+  // Your code goes here...
 };
 
 App.hideModal = function displayModal() {
   const modal = document.querySelector("#modal");
-  modal.style.opacity = "0";
-  setTimeout(() => modal.style.display = "none", App.Constants.animation_transition_time);
+  // TODO-JS - hide the modal by setting its opacity to "0" then setting the display to "none" after App.Constants.animation_transition_time seconds
+  // Hint: use setTimeout
+  // Your code goes here...
 };
 
 /*******************
