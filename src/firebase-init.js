@@ -10,9 +10,7 @@ const Firebase = {};
  * @async
  * */
 Firebase.loadPosts = async function loadPosts() {
-  const ref = firebase.database().ref("posts");
-  const snapshot = await ref.once("value");
-  return snapshot.val();
+  // todo - to be implemented
 };
 
 /**
@@ -23,13 +21,7 @@ Firebase.loadPosts = async function loadPosts() {
  * @async
  * */
 Firebase.storePost = async function storePost(post_object) {
-  // create a new reference child (with a random hash)
-  // for the new post to be stored
-  const ref = firebase.database().ref("posts");
-  const new_child_ref = ref.push();
-
-  // store the new post object into that reference
-  new_child_ref.set(post_object);
+  // todo - to be implemented
 };
 
 /**
@@ -41,11 +33,7 @@ Firebase.storePost = async function storePost(post_object) {
  * @async
  * */
 Firebase.updateUserVoteToPost = async function updateUserVoteToPost(post_id, username, vote) {
-  const ref = firebase.database().ref(`posts/${post_id}/votes/${username}`);
-  // if vote = 0 (i.e. no vote), then this will result in
-  // removing that username from the vote because
-  // JS automatically casts 0 into a boolean false
-  ref.set(vote ? vote : null);
+  // todo - to be implemented
 };
 
 /**
@@ -55,6 +43,5 @@ Firebase.updateUserVoteToPost = async function updateUserVoteToPost(post_id, use
  * @void
  * */
 Firebase.activateListeningToPosts = function activateListeningToPosts() {
-  const ref = firebase.database().ref("posts");
-  ref.on("value", App.loadFeed);
+  // todo - to be implemented
 };
