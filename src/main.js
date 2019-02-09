@@ -84,11 +84,10 @@ App.Constants = {
 /* main function to run when the window loads */
 App.main = function main() {
   // todo - remove this when Firebase is implemented
-  // App.Constants.sample_posts.forEach((post) => App.Vars.posts.push(post));
+  App.Constants.sample_posts.forEach((post) => App.Vars.posts.push(post));
   App.loadFeed();
   App.activateSortingSelection();
   App.activateModalFunctions();
-  Firebase.activateListeningToPosts();
 };
 
 // when the window loads, run APP.main
@@ -111,8 +110,7 @@ App.loadFeed = function loadFeed() {
   // reinitialize the upvotes and downvotes
   App.Vars.votes = {};
   // get the sorted posts based on the sorting method
-  /*
-  // not using Firebase
+
   const feed_posts = document.querySelector("#feed-posts");
   Utils.removeAllChildren(feed_posts);
   App.getSortedPosts(App.Vars.posts).forEach((post) => {
@@ -121,30 +119,7 @@ App.loadFeed = function loadFeed() {
     App.copyOverAppUsernameVotes(post);
     App.addPostToHTML(post);
     App.updatePostOnView(post);
-  }); */
-
-  // using Firebase
-  Firebase.loadPosts()
-    .then(function onFulfilled(posts) {
-      // first, remove all posts from the feed so that we have no duplicates
-      const feed_posts = document.querySelector("#feed-posts");
-      Utils.removeAllChildren(feed_posts);
-      // add all posts as a list instead of an object
-      App.Vars.posts = Utils.getPostListFromPostObject(posts);
-      // get the sorted posts based on the sorting method, and
-      // add each post to the HTML
-      App.getSortedPosts(App.Vars.posts).forEach((post) => {
-        // make sure that if we pick a username that has
-        // voted, we're able to take that username's vote
-        App.copyOverAppUsernameVotes(post);
-        App.addPostToHTML(post);
-        App.updatePostOnView(post);
-      });
-    })
-    .catch(function onRejected(error) {
-      // todo - handle error - somehow let user know
-      console.error(error);
-    });
+  });
 };
 
 App.getSortedPosts = function getSortedPosts(posts) {
@@ -342,11 +317,8 @@ App.createNewPostElement = function createNewPostElement() {
 
 App.addNewPost = function addNewPost(text) {
   const post_obj = { text, posted_on: Date.now(), username: App.Vars.username };
-  // App.Vars.posts.push(post_obj);
-  // App.loadFeed();
-  // using Firebase: since we're listening to changes, there's
-  // no need to reload posts after storing this post.
-  Firebase.storePost(post_obj).then();
+  App.Vars.posts.push(post_obj);
+  App.loadFeed();
 };
 
 /*******************
@@ -465,15 +437,6 @@ App.updateView = function updateView() {
 /** send the current vote that we have to firebase */
 App.sendAppVotesToFirebase = function sendAppVotesToFirebase() {
   // todo - to be completed later
-  Object.keys(App.Vars.votes).forEach((post_id) => {
-    Firebase
-      .updateUserVoteToPost(post_id, App.Vars.username, App.Vars.votes[post_id])
-      .then(() => console.log("vote updated"))
-      .catch((error) => {
-        // todo - let the user know
-        console.error(error);
-      });
-  });
 };
 
 /*******************************
