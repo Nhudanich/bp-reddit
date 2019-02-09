@@ -83,8 +83,6 @@ App.Constants = {
 
 /* main function to run when the window loads */
 App.main = function main() {
-  // todo - remove this when Firebase is implemented
-  // App.Constants.sample_posts.forEach((post) => App.Vars.posts.push(post));
   App.loadFeed();
   App.activateSortingSelection();
   App.activateModalFunctions();
@@ -110,18 +108,6 @@ App.loadFeed = function loadFeed() {
 
   // reinitialize the upvotes and downvotes
   App.Vars.votes = {};
-  // get the sorted posts based on the sorting method
-  /*
-  // not using Firebase
-  const feed_posts = document.querySelector("#feed-posts");
-  Utils.removeAllChildren(feed_posts);
-  App.getSortedPosts(App.Vars.posts).forEach((post) => {
-    // make sure that if we pick a username that has
-    // voted, we're able to take that username's vote
-    App.copyOverAppUsernameVotes(post);
-    App.addPostToHTML(post);
-    App.updatePostOnView(post);
-  }); */
 
   // using Firebase
   Firebase.loadPosts()
@@ -342,8 +328,6 @@ App.createNewPostElement = function createNewPostElement() {
 
 App.addNewPost = function addNewPost(text) {
   const post_obj = { text, posted_on: Date.now(), username: App.Vars.username };
-  // App.Vars.posts.push(post_obj);
-  // App.loadFeed();
   // using Firebase: since we're listening to changes, there's
   // no need to reload posts after storing this post.
   Firebase.storePost(post_obj).then();
@@ -464,13 +448,13 @@ App.updateView = function updateView() {
 
 /** send the current vote that we have to firebase */
 App.sendAppVotesToFirebase = function sendAppVotesToFirebase() {
-  // todo - to be completed later
+  // sends each vote to firebase
   Object.keys(App.Vars.votes).forEach((post_id) => {
     Firebase
       .updateUserVoteToPost(post_id, App.Vars.username, App.Vars.votes[post_id])
       .then(() => console.log("vote updated"))
       .catch((error) => {
-        // todo - let the user know
+        // todo - let the user know that an error happened
         console.error(error);
       });
   });
@@ -569,6 +553,7 @@ Builder.input = function (type, idName, onClickFunc) {
   return input;
 };
 
+/** builds a textarea element with the given id */
 Builder.textarea = function (idName) {
   const textarea = document.createElement("textarea");
   textarea.id = idName;
