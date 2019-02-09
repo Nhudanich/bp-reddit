@@ -86,6 +86,8 @@ App.main = function main() {
   App.loadFeed();
   App.activateSortingSelection();
   App.activateModalFunctions();
+
+  // FB-READY - added this so that firebase can listen to posts
   Firebase.activateListeningToPosts();
 };
 
@@ -109,7 +111,7 @@ App.loadFeed = function loadFeed() {
   // reinitialize the upvotes and downvotes
   App.Vars.votes = {};
 
-  // using Firebase
+  // FB-READY - using Firebase now
   Firebase.loadPosts()
     .then(function onFulfilled(posts) {
       // first, remove all posts from the feed so that we have no duplicates
@@ -448,7 +450,7 @@ App.updateView = function updateView() {
 
 /** send the current vote that we have to firebase */
 App.sendAppVotesToFirebase = function sendAppVotesToFirebase() {
-  // sends each vote to firebase
+  // FB-READY - sends each vote to firebase
   Object.keys(App.Vars.votes).forEach((post_id) => {
     Firebase
       .updateUserVoteToPost(post_id, App.Vars.username, App.Vars.votes[post_id])
