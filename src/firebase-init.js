@@ -10,7 +10,9 @@ const Firebase = {};
  * @async
  * */
 Firebase.loadPosts = async function loadPosts() {
-  // FB-READY - this gets the snapshot and returns its value, which in this case is the posts as an object
+  // FB-READY - this gets the snapshot and returns its
+  //            value, which in this case is the posts
+  //            as an object
   const ref = firebase.database().ref("posts");
   const snapshot = await ref.once("value");
   return snapshot.val();
@@ -24,12 +26,13 @@ Firebase.loadPosts = async function loadPosts() {
  * @async
  * */
 Firebase.storePost = async function storePost(post_object) {
-  // create a new reference child (with a random hash)
-  // for the new post to be stored
-  // TODO-FB - to be implemented
+  // TODO-FB - create a new reference child (with a random
+  //           hash) for the new post to be stored
+  // Your code goes here...
 
-  // store the new post object into that reference
-  // TODO-FB - to be implemented
+  // TODO-FB - after the above, store the new post object into
+  //           that reference
+  // Your code goes here...
 };
 
 /**
@@ -41,12 +44,14 @@ Firebase.storePost = async function storePost(post_object) {
  * @async
  * */
 Firebase.updateUserVoteToPost = async function updateUserVoteToPost(post_id, username, vote) {
-  // get the ref for this post and username's vote
-  // TODO-FB - to be implemented
+  // TODO-FB - get the ref for the username's vote on this post's
+  //           ref. complete the dots
+  const ref = ...;
+
   // if vote = 0 (i.e. no vote), then this will result in
   // removing that username from the vote because
   // JS automatically casts 0 into a boolean false
-  // TODO-FB - to be implemented
+  ref.set(vote ? vote : null);
 };
 
 /**
@@ -56,7 +61,8 @@ Firebase.updateUserVoteToPost = async function updateUserVoteToPost(post_id, use
  * @void
  * */
 Firebase.activateListeningToPosts = function activateListeningToPosts() {
-  // TODO-FB - to be implemented - complete the dots
+  // TODO-FB - complete the dots. this should get the "posts"
+  //           refs, and that's all
   const ref = ...;
   ref.on("value", App.loadFeed);
 };
