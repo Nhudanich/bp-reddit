@@ -88,7 +88,9 @@ App.main = function main() {
   App.activateModalFunctions();
 
   // FB-READY - added this so that firebase can listen to posts
-  Firebase.activateListeningToPosts();
+  // TODO-FB - call a firebase method to listen to posts
+  //           changes and update the feed accordingly
+  // Your code goes here...
 };
 
 // when the window loads, run APP.main
@@ -329,7 +331,9 @@ App.addNewPost = function addNewPost(text) {
   const post_obj = { text, posted_on: Date.now(), username: App.Vars.username };
   // using Firebase: since we're listening to changes, there's
   // no need to reload posts after storing this post.
-  Firebase.storePost(post_obj).then();
+  // TODO-FB - call a method from the firebase object to
+  //           store this post object in the database
+  // Your code goes here...
 };
 
 /*******************
