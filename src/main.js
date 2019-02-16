@@ -170,7 +170,8 @@ App.copyOverAppUsernameVotes = function copyOverAppUsernameVotes(post) {
 };
 
 App.addPostToHTML = function addPost(post) {
-  // TODO-JS - implement this method by creating a new post element and appending it to #feed-posts
+  // TODO-JS - implement this method by creating a new post
+  //           element and appending it to #feed-posts
 };
 
 /**
@@ -278,19 +279,16 @@ App.activateSortingSelection = function activateSortingSelection() {
 };
 
 App.setSortingMethod = function setSortingMethod(sorting_method) {
-  switch (App.Vars.active_feed_style) {
-    // multiple cases without breaks will fall back to the
-    // last one with a break or a return statement
-    case App.Constants.SortingMethod.random:
-    case App.Constants.SortingMethod.ranked:
-    case App.Constants.SortingMethod.chronological:
-      App.Vars.active_feed_style = sorting_method;
-      break;
-    // if we it's not any of the above, don't change anything
-    default:
-      break;
+  if (
+    sorting_method === App.Constants.SortingMethod.random
+    || sorting_method === App.Constants.SortingMethod.ranked
+    || sorting_method === App.Constants.SortingMethod.chronological
+  ) {
+    // the sorting method we're setting must be one
+    // of the above
+    App.Vars.active_feed_style = sorting_method;
+    App.updateView();
   }
-  App.updateView();
 };
 
 
@@ -466,14 +464,17 @@ App.displayModal = function displayModal(html_element) {
   const modal_init = document.querySelector("#modal-init");
   Utils.removeAllChildren(modal_init);
   modal_init.appendChild(html_element);
-  // TODO-JS - display the modal object by setting its display to "block" and opacity to "1"
+  // TODO-JS - display the modal object by setting its
+  //           display to "block" and opacity to "1"
   // Your code goes here...
 };
 
 App.hideModal = function displayModal() {
   const modal = document.querySelector("#modal");
-  // TODO-JS - hide the modal by setting its opacity to "0" then setting the display to "none" after App.Constants.animation_transition_time seconds
-  // Hint: use setTimeout
+  // TODO-JS - hide the modal by setting its opacity to "0"
+  //           then setting the display to "none" after
+  //           App.Constants.animation_transition_time seconds
+  //           Hint: use setTimeout
   // Your code goes here...
 };
 
@@ -483,12 +484,11 @@ App.hideModal = function displayModal() {
 
 /** builds a span object with an optional text inside it */
 Builder.span = function (optionalInnerText) {
-  if (!optionalInnerText) {
-    return document.createElement("span");
-  }
-  const span = document.createElement("span");
-  span.appendChild(document.createTextNode(optionalInnerText));
-  return span;
+  // TODO-JS - create a span element and return it. if the
+  //           optional text is given, create a text node
+  //           element with this optional text and append
+  //           it as a child to the span, then return that
+  // Your code goes here...
 };
 
 /**
@@ -504,9 +504,11 @@ Builder.elementWithClass = function (className, optionalInnerText) {
  * builds a span object with the given idName and an
  * optional text inside it */
 Builder.elementWithId = function (idName, optionalInnerText) {
-  const span = Builder.span(optionalInnerText);
-  span.id = idName;
-  return span;
+  // TODO-JS - create a span with the optional text above, and
+  //           make the id of this span the id given in the
+  //           parameter
+  //           Hint: look at Builder.elementWithClass
+  // Your code goes here...
 };
 
 /**
