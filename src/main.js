@@ -293,19 +293,16 @@ App.activateSortingSelection = function activateSortingSelection() {
 };
 
 App.setSortingMethod = function setSortingMethod(sorting_method) {
-  switch (App.Vars.active_feed_style) {
-    // multiple cases without breaks will fall back to the
-    // last one with a break or a return statement
-    case App.Constants.SortingMethod.random:
-    case App.Constants.SortingMethod.ranked:
-    case App.Constants.SortingMethod.chronological:
-      App.Vars.active_feed_style = sorting_method;
-      break;
-    // if we it's not any of the above, don't change anything
-    default:
-      break;
+  if (
+    sorting_method === App.Constants.SortingMethod.random
+    || sorting_method === App.Constants.SortingMethod.ranked
+    || sorting_method === App.Constants.SortingMethod.chronological
+  ) {
+    // the sorting method we're setting must be one
+    // of the above
+    App.Vars.active_feed_style = sorting_method;
+    App.updateView();
   }
-  App.updateView();
 };
 
 
