@@ -327,7 +327,7 @@ App.addNewPost = function addNewPost(text) {
   const post_obj = { text, posted_on: Date.now(), username: App.Vars.username };
   // using Firebase: since we're listening to changes, there's
   // no need to reload posts after storing this post.
-  Firebase.storePost(post_obj).then();
+  Firebase.storePost(post_obj);
 };
 
 /*******************
