@@ -25,7 +25,7 @@ Firebase.loadPosts = async function loadPosts() {
  * @void
  * @async
  * */
-Firebase.storePost = async function storePost(post_object) {
+Firebase.storePost = function storePost(post_object) {
   // TODO-FB - create a new reference child (with a random
   //           hash) for the new post to be stored
   // Your code goes here...
