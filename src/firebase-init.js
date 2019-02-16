@@ -11,6 +11,10 @@ const Firebase = {};
  * */
 Firebase.loadPosts = async function loadPosts() {
   const ref = firebase.database().ref("posts");
+  // this is called a snapshot because it captures the state
+  // of the database reference at that moment in time. it's
+  // like a picture of what the database looks like when this
+  // function is called.
   const snapshot = await ref.once("value");
   return snapshot.val();
 };
@@ -23,9 +27,9 @@ Firebase.loadPosts = async function loadPosts() {
  * @async
  * */
 Firebase.storePost = async function storePost(post_object) {
+  const ref = firebase.database().ref("posts");
   // create a new reference child (with a random hash)
   // for the new post to be stored
-  const ref = firebase.database().ref("posts");
   const new_child_ref = ref.push();
 
   // store the new post object into that reference
@@ -56,5 +60,7 @@ Firebase.updateUserVoteToPost = async function updateUserVoteToPost(post_id, use
  * */
 Firebase.activateListeningToPosts = function activateListeningToPosts() {
   const ref = firebase.database().ref("posts");
+  // every time there is a change in the ref, we run the
+  // App.loadFeed method
   ref.on("value", App.loadFeed);
 };
