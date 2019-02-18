@@ -32,8 +32,6 @@ App.Constants = {
   sample_posts: [
     {
       text: "I love this mini-reddit app",
-      ups: 10,
-      downs: 5,
       votes: {a: 1, b: 1, c: 1, d: 1, e: 1, f: -1, g: -1, h: -1, i: -1},
       posted_on: 1549531526751,
       username: "YourAverageCoder",
@@ -41,8 +39,6 @@ App.Constants = {
     },
     {
       text: "Eww Harvard",
-      ups: 999,
-      downs: 3,
       votes: {a: 1, b: 1, c: 1, d: 1, e: 1, f: 1, g: 1, h: 1, i: 1, j: 1, k: -1},
       posted_on: 1548521537614,
       username: "MIT_Student23",
@@ -50,8 +46,6 @@ App.Constants = {
     },
     {
       text: "Eww Harvard really sucks!",
-      ups: 109,
-      downs: 7,
       votes: {a: 1, b: 1, c: 1, d: 1, e: 1, f: 1, g: 1, h: 1, i: 1, j: 1, k: -1, l: 1},
       posted_on: 1548621537614,
       username: "MIT_Student23",
@@ -59,8 +53,6 @@ App.Constants = {
     },
     {
       text: "I really wish I went to MIT! It's so much better there!",
-      ups: 43,
-      downs: 0,
       votes: {a: 1, b: 1, c: 1, i: -1},
       posted_on: 1548921537614,
       username: "AverageHarvardStudent42",
